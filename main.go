@@ -17,6 +17,7 @@ type beer struct {
 	Title    string `json:"title"`
 	Brewery  string `json:"brewery"`
 	Price    string `json:"price"`
+	Size     string `json:"size"`
 	ABV      string `json:"abv"`
 	BeerType string `json:"beerType"`
 	Country  string `json:"country"`
@@ -74,9 +75,11 @@ func Handler() (string, error) {
 								log.Println(err.Error())
 							}
 
-							err = sendToSlack(t, beers)
-							if err != nil {
-								log.Println(err.Error())
+							if len(beers) > 0 {
+								err = sendToSlack(t, href, beers)
+								if err != nil {
+									log.Println(err.Error())
+								}
 							}
 						}
 					})
@@ -87,14 +90,15 @@ func Handler() (string, error) {
 	return "Done", nil
 }
 
-func sendToSlack(t time.Time, beers []beer) error {
+func sendToSlack(t time.Time, url string, beers []beer) error {
 	// Create buffer
 	var buffer bytes.Buffer
 
-	buffer.WriteString(":beers: *Nytt ölsläpp inom en vecka!* :beers: (" + t.Format("2006-01-02") + ")\n\n")
-	buffer.WriteString("*Öl, Bryggeri, Pris, ABV, Typ, Land*\n")
+	buffer.WriteString(":beers: *Nytt ölsläpp inom en vecka!* :beers: (" + t.Format("2006-01-02") + ")\n")
+	buffer.WriteString(url + "\n\n")
+	buffer.WriteString("*Öl, Bryggeri, Pris, Storlek, ABV, Typ, Land*\n")
 	for _, beer := range beers {
-		line := "*" + beer.Title + "*, " + beer.Brewery + ", " + beer.Price + "kr, " + beer.ABV + ", " + beer.BeerType + ", " + beer.Country + "\n"
+		line := "*" + beer.Title + "*, " + beer.Brewery + ", " + beer.Price + "kr, " + beer.Size + ", " + beer.ABV + ", " + beer.BeerType + ", " + beer.Country + "\n"
 		buffer.WriteString(line)
 	}
 
@@ -136,11 +140,12 @@ func getBeers(url string) ([]beer, error) {
 		title := strings.Split(strings.TrimSpace(s.Find("span.title").Text()), "\n")[0]
 		brewery := strings.Split(strings.TrimSpace(s.Find("span.brewery-title").Text()), "\n")[0]
 		price := strings.Split(strings.TrimSpace(s.Find("span.price").Text()), "\n")[0]
+		size := strings.Split(strings.TrimSpace(s.Find("div.pack-info span.size").Text()), "\n")[0]
 		abv := strings.Split(strings.TrimSpace(s.Find("div.right-left-col span.abv").Text()), "\n")[0]
 		beerType := strings.Split(strings.TrimSpace(s.Find("div.right-left-col span.value").Text()), "\n")[0]
 		country := strings.Split(strings.TrimSpace(s.Find("div.right-left-col div.value").Text()), "\n")[0]
 
-		beers = append(beers, beer{title, brewery, price, abv, beerType, country})
+		beers = append(beers, beer{title, brewery, price, size, abv, beerType, country})
 	})
 
 	return beers, nil
