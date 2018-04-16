@@ -6,12 +6,19 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/aws/aws-lambda-go/lambda"
 )
+
+type release struct {
+	Time  time.Time `json:"time"`
+	Beers []beer    `json:"beers"`
+	URL   string    `json:"url"`
+}
 
 type beer struct {
 	Title    string `json:"title"`
@@ -46,6 +53,8 @@ func Handler() (string, error) {
 
 	var replacer = strings.NewReplacer(" ", "")
 
+	var releases []release
+
 	doc.Find("h3").Each(func(i int, s *goquery.Selection) {
 		topicDates := strings.Split(replacer.Replace(s.Text()), "\n")
 		topicYear := strings.TrimSpace(topicDates[1])
@@ -76,10 +85,7 @@ func Handler() (string, error) {
 							}
 
 							if len(beers) > 0 {
-								err = sendToSlack(t, href, beers)
-								if err != nil {
-									log.Println(err.Error())
-								}
+								releases = append(releases, release{t, beers, href})
 							}
 						}
 					})
@@ -87,17 +93,27 @@ func Handler() (string, error) {
 			}
 		})
 	})
+
+	sort.Slice(releases, func(i, j int) bool { return releases[i].Time.Before(releases[j].Time) })
+
+	for _, release := range releases {
+		err = sendToSlack(release)
+		if err != nil {
+			log.Println(err.Error())
+		}
+	}
+
 	return "Done", nil
 }
 
-func sendToSlack(t time.Time, url string, beers []beer) error {
+func sendToSlack(release release) error {
 	// Create buffer
 	var buffer bytes.Buffer
 
-	buffer.WriteString(":beers: *Nytt ölsläpp inom en vecka!* :beers: (" + t.Format("2006-01-02") + ")\n")
-	buffer.WriteString(url + "\n\n")
+	buffer.WriteString(":beers: *Nytt ölsläpp inom en vecka!* :beers: (" + release.Time.Format("2006-01-02") + ")\n")
+	buffer.WriteString(release.URL + "\n\n")
 	buffer.WriteString("*Öl, Bryggeri, Pris, Storlek, ABV, Typ, Land*\n")
-	for _, beer := range beers {
+	for _, beer := range release.Beers {
 		line := "*" + beer.Title + "*, " + beer.Brewery + ", " + beer.Price + "kr, " + beer.Size + ", " + beer.ABV + ", " + beer.BeerType + ", " + beer.Country + "\n"
 		buffer.WriteString(line)
 	}

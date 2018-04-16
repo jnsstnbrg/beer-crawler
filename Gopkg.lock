@@ -25,6 +25,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/djhworld/go-lambda-invoke"
+  packages = ["golambdainvoke"]
+  revision = "82733fd6d8fa6b328e406e3187c72341268826ee"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = [
     "html",
@@ -35,6 +41,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "efb033adca6c08b105269814f1096125b2722500ddef00556e9990dafcfa9096"
+  inputs-digest = "47719d2adee599da8ef652f6f619dcb5ac8e082b28ff3f79c8b9116520472637"
   solver-name = "gps-cdcl"
   solver-version = 1
