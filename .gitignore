@@ -1,3 +1,4 @@
 vendor/
 main
 .env
+client_test.go
