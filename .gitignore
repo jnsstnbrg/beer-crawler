@@ -1,4 +1,14 @@
-vendor/
-main
+# Environment variables
 .env
+
+# Client to test locally
 client_test.go
+
+# Binary
+main
+
+# Zip file which is uploaded to AWS
+main.zip
+
+# Modules and stuff
+vendor/
