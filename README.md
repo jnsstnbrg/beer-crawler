@@ -1,9 +1,9 @@
 # beer-crawler
 
-> Crawls [systemizr.se](https://systemizr.se/releases) for beer news
+> Uses [bolaget.io](https://bolaget.io/) to check for beer news
 
-This project consists of a AWS Lambda function which crawls
-systemizr.se for beer news and publish them to a Slack channel.
+This project consists of a AWS Lambda function which uses bolaget.io API
+to check for beer news and posts them to a Slack channel.
 
 ## Install
 
