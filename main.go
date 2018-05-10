@@ -25,8 +25,8 @@ type customTime struct {
 
 type product struct {
 	Number             string     `json:"nr"`
-	ArticleID          int32      `json:"article_id"`
-	ArticleNumber      int32      `json:"article_nr"`
+	ArticleID          int        `json:"article_id"`
+	ArticleNumber      int        `json:"article_nr"`
 	Name               string     `json:"name"`
 	AdditionalName     string     `json:"additional_name"`
 	Price              price      `json:"price"`
@@ -110,7 +110,7 @@ func sendToSlack(products []product, systembolagetURL string) error {
 		// Write product specific information to buffer
 		productBuffer.WriteString("*" + product.Name + " " + product.AdditionalName + "*, ")
 		productBuffer.WriteString(product.Producer + ", ")
-		productBuffer.WriteString(strconv.FormatFloat(product.Price.Amount, 'f', 1, 64) + " " + product.Price.Currency + ", ")
+		productBuffer.WriteString(strconv.FormatFloat(product.Price.Amount, 'f', 2, 64) + " " + product.Price.Currency + ", ")
 		productBuffer.WriteString(strconv.Itoa(product.VolumeInMilliliter) + " ml, ")
 		productBuffer.WriteString(product.Alcohol + ", ")
 		productBuffer.WriteString(product.Style + ", ")
