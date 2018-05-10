@@ -1,9 +1,9 @@
 # beer-crawler
 
-> Uses [bolaget.io](https://bolaget.io/) to check for beer news
+> Polls [bolaget.io](https://bolaget.io/) API for beer news
 
-This project consists of a AWS Lambda function which uses bolaget.io API
-to check for beer news and posts them to a Slack channel.
+This project consists of a AWS Lambda function which polls
+bolaget.io API for beer news and posts them to a Slack channel.
 
 ## Install
 
