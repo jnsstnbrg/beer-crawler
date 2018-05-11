@@ -49,6 +49,10 @@ Create a new Lambda on AWS and upload main.zip.
 
 Add `SLACK_URL` environment variable with a Slack webhook URL.
 
+## Thanks
+
+Many thanks to larsha (https://github.com/larsha/) for the RESTful JSON API for Systembolaget and for the golang SDK.
+
 ## License
 
 The MIT License (MIT)
