@@ -24,14 +24,14 @@
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/jnsstnbrg/bolaget.io-sdk-go"
+  name = "github.com/larsha/bolaget.io-sdk-go"
   packages = ["."]
-  revision = "6f3f1c970ee31b0b475c556a2bca4244eec1b6c8"
+  revision = "0aaf7a30084188ff549488584289fd11d1328a65"
+  version = "1.0.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ef7c36c48200634218b90c8febc4fae185433448a1adaee47f3548345f760f76"
+  inputs-digest = "1fb4d76e0bd6e9380866bcfec42d6b45fa41fcc6014d94e79341a72e54da342c"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
-	b "github.com/jnsstnbrg/bolaget.io-sdk-go"
+	b "github.com/larsha/bolaget.io-sdk-go"
 )
 
 type slackRequest struct {
