@@ -35,16 +35,21 @@ func Handler() (string, error) {
 		SalesStartFrom: today,
 		SalesStartTo:   futureWeek,
 	})
-
-	// URL to systembolaget, is later sent to Slack
-	systembolagetURL := "https://www.systembolaget.se/sok-dryck/?assortmenttext=Sm%C3%A5%20partier&sellstartdatefrom=" + today + "&sellstartdateto=" + futureWeek + "&subcategory=%C3%96l&fullassortment=1"
+	if err != nil {
+		log.Println(err)
+		return "Error", err
+	}
 
 	// Check if products slice contains any items
 	if len(products) > 0 {
+		// URL to systembolaget, is later sent to Slack
+		systembolagetURL := "https://www.systembolaget.se/sok-dryck/?assortmenttext=Sm%C3%A5%20partier&sellstartdatefrom=" + today + "&sellstartdateto=" + futureWeek + "&subcategory=%C3%96l&fullassortment=1"
+
 		// Send to Slack
 		err = sendToSlack(products, systembolagetURL)
 		if err != nil {
 			log.Println(err.Error())
+			return "Error", err
 		}
 	}
 
