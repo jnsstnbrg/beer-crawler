@@ -9,7 +9,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/aws/aws-lambda-go/lambda"
 	b "github.com/larsha/bolaget.io-sdk-go"
 )
 
@@ -18,18 +17,13 @@ type slackRequest struct {
 }
 
 func main() {
-	lambda.Start(Handler)
-}
-
-// Handler is a lambda handler function
-func Handler() (string, error) {
 	// Save today's and a week ahead's date in variables
 	today := time.Now().Format("2006-01-02")
 	futureWeek := time.Now().AddDate(0, 0, 7).Format("2006-01-02")
 
 	// URL to where the json data exists
 	products, err := b.GetProducts(b.ProductQueryParams{
-		Assortment:     "TSE",
+		Assortment:     "TSE|TSLS|TSV|TST",
 		Limit:          100,
 		ProductGroup:   "Öl",
 		SalesStartFrom: today,
@@ -37,7 +31,7 @@ func Handler() (string, error) {
 	})
 	if err != nil {
 		log.Println(err)
-		return "Error", err
+    return
 	}
 
 	// Check if products slice contains any items
@@ -49,11 +43,9 @@ func Handler() (string, error) {
 		err = sendToSlack(products, systembolagetURL)
 		if err != nil {
 			log.Println(err.Error())
-			return "Error", err
+      return
 		}
 	}
-
-	return "Done", nil
 }
 
 func sendToSlack(products []b.Product, systembolagetURL string) error {
@@ -101,7 +93,7 @@ func sendToSlack(products []b.Product, systembolagetURL string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+  defer resp.Body.Close()
 
 	return nil
 }

@@ -2,36 +2,24 @@
 
 
 [[projects]]
-  name = "github.com/aws/aws-lambda-go"
-  packages = [
-    "lambda",
-    "lambda/messages",
-    "lambdacontext"
-  ]
-  revision = "fafa7e49388b8991caf99308e80655ba91816b72"
-  version = "v1.1.0"
-
-[[projects]]
   branch = "master"
-  name = "github.com/djhworld/go-lambda-invoke"
-  packages = ["golambdainvoke"]
-  revision = "82733fd6d8fa6b328e406e3187c72341268826ee"
-
-[[projects]]
-  branch = "master"
+  digest = "1:a63cff6b5d8b95638bfe300385d93b2a6d9d687734b863da8e09dc834510a690"
   name = "github.com/google/go-querystring"
   packages = ["query"]
+  pruneopts = "UT"
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
+  digest = "1:64ecc7b265eb2a2c1b9abf2735c6fbd6c9e6b054e4204802237a19068fba173e"
   name = "github.com/larsha/bolaget.io-sdk-go"
   packages = ["."]
+  pruneopts = "UT"
   revision = "0aaf7a30084188ff549488584289fd11d1328a65"
   version = "1.0.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1fb4d76e0bd6e9380866bcfec42d6b45fa41fcc6014d94e79341a72e54da342c"
+  input-imports = ["github.com/larsha/bolaget.io-sdk-go"]
   solver-name = "gps-cdcl"
   solver-version = 1

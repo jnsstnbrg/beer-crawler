@@ -2,7 +2,7 @@
 
 > Polls [bolaget.io](https://bolaget.io/) API for beer news
 
-This project consists of a AWS Lambda function which polls
+This project consists of a function that polls
 bolaget.io API for beer news and posts them to a Slack channel.
 
 ## Install
@@ -39,15 +39,7 @@ To build the crawler run the following command:
 GOOS=linux go build -o main
 ```
 
-Create a zip file:
-
-```
-zip main main
-```
-
-Create a new Lambda on AWS and upload main.zip.
-
-Add `SLACK_URL` environment variable with a Slack webhook URL.
+Run `main` with whatever tool you wish. Deploy to Lambda/Cloud Function, use crontab on your Raspberry, or something else entirely. All up to you. :)
 
 ## Thanks
 
