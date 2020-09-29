@@ -1,4 +1,7 @@
-# beer-crawler
+# ARCHIVED
+
+Systembolaget updated their TOS which means they no longer support a product API.
+This repository has been archived.
 
 > Polls [bolaget.io](https://bolaget.io/) API for beer news
 
